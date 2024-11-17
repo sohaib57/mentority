@@ -1,0 +1,17 @@
+Options -MultiViews
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^ index.html [QSA,L]
+<IfModule mod_headers.c>
+  <FilesMatch "\.(html|php)$">
+    Header set Content-Security-Policy https://dev.mentority.app;"
+  </FilesMatch>
+  #Header set Content-Security-Policy "default-src 'self'; script-src 'self'"
+  # Add any additional directives as needed
+  Header always append X-Frame-Options SAMEORIGIN
+  Header set X-Content-Type-Options nosniff
+  Header always set Referrer-Policy "no-referrer"
+  <FilesMatch "\.(php|html)$">
+    Header set Permissions-Policy "geolocation=(self), camera=(), microphone=()"
+  </FilesMatch>
+</IfModule>
